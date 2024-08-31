@@ -18,12 +18,12 @@ fun App(
         composable("/") {
             HomeScreen(
                 onAppSelected = { id, name ->
-                    navController.navigate("/app/${id}?name=${name}")
+                    navController.navigate("/repo/${id}?name=${name}")
                 }
             )
         }
         composable(
-            route = "/app/{id}?name={name}",
+            route = "/repo/{id}?name={name}",
             arguments = listOf(
                 navArgument("id") {
                     type = NavType.LongType

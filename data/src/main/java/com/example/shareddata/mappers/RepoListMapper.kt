@@ -15,9 +15,10 @@ fun ItemsDto.mapToEntity(): RepositoryEntity? {
         owner?.avatarUrl,
         language,
         description,
-        url,
-        forks,
-        stargazersCount
+        htmlUrl,
+        forksCount,
+        stargazersCount,
+        openIssuesCount,
     )
 }
 
@@ -36,6 +37,7 @@ fun RepositoryEntity.mapToLib(): Repository {
         url.orEmpty(),
         forks ?: 0,
         stars ?: 0,
+        openIssuesCount ?: 0,
     )
 }
 

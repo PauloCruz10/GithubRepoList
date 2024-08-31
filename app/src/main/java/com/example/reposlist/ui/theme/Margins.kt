@@ -7,9 +7,8 @@ val marginSmall = 8.dp
 val marginxSmall = 6.dp
 val marginxxSmall = 4.dp
 
-val highlightedCardSize = 300.dp
-val itemCardHeight = 180.dp
-val itemCardWidth = 140.dp
 
 val detailComponentIcon = 40.dp
-
+val avatarHeaderSize = 100.dp
+val backButtonSize = 50.dp
+val itemCardSize = 200.dp

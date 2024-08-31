@@ -12,4 +12,5 @@ data class Repository(
     val url: String = "",
     val forks: Long = -1,
     val stars: Long = -1,
+    val openIssues: Long = -1,
 )

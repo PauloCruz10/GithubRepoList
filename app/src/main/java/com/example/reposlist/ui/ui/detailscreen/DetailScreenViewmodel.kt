@@ -21,31 +21,20 @@ class DetailScreenViewmodel @Inject constructor(savedStateHandle: SavedStateHand
     val name by lazy { savedStateHandle.get<String>("name").orEmpty() }
     private val appId by lazy { savedStateHandle.get<Long>("id") ?: -1L }
 
-    private val _showDialog = MutableStateFlow(false)
-    val showDialog = _showDialog.asStateFlow()
-
     init {
         Log.d("DetailScreenViewmodel", "init")
-        loadApp(appId)
+        loadRepository(appId)
     }
 
-    private val _currentApp = MutableStateFlow<Resource<GithubRepoDetails>>(Resource.Loading())
-    val currentApp = _currentApp.asStateFlow()
+    private val _currentRepository = MutableStateFlow<Resource<GithubRepoDetails>>(Resource.Loading())
+    val currentRepository = _currentRepository.asStateFlow()
 
-    fun loadApp(appId: Long = this.appId) {
+    fun loadRepository(appId: Long = this.appId) {
         viewModelScope.launch(Dispatchers.IO) {
             githubsRepository.getRepositoryById(appId).collect {
-                _currentApp.emit(handleResult(it))
+                _currentRepository.emit(handleResult(it))
             }
         }
-    }
-
-    fun showDialog() {
-        _showDialog.tryEmit(true)
-    }
-
-    fun hideDialog() {
-        _showDialog.tryEmit(false)
     }
 
     private fun handleResult(info: Resource<Repository>): Resource<GithubRepoDetails> {
@@ -56,28 +45,34 @@ class DetailScreenViewmodel @Inject constructor(savedStateHandle: SavedStateHand
         }
     }
 
-    private fun Repository.toAppDetailItem(): List<RepositoryDetailItem> {
-        return listOf(
-            RepositoryDetailItem(name.toString(), AppDetailType.NAME),
-            RepositoryDetailItem(stars.toString().formatSize(), AppDetailType.SIZE),
-            RepositoryDetailItem(forks.toString(), AppDetailType.DOWNLOAD),
-            //RepositoryDetailItem(updated.orEmpty().getFormattedDate(), AppDetailType.LAST_UPDATED),
-            RepositoryDetailItem(stars.toString(), AppDetailType.RATING),
+    private fun Repository.toRepositoryDetailItem(): List<RepositoryDetailItem> {
+        val details = mutableListOf<RepositoryDetailItem>()
+        if (description.isNotEmpty()) details.add(RepositoryDetailItem(description, RepositoryDetailType.DESCRIPTION))
+        details.addAll(
+            listOf(
+                RepositoryDetailItem(stars.toString().formatSize(), RepositoryDetailType.SIZE),
+                RepositoryDetailItem(forks.toString(), RepositoryDetailType.DOWNLOAD),
+                RepositoryDetailItem(stars.toString(), RepositoryDetailType.RATING),
+                RepositoryDetailItem(openIssues.toString(), RepositoryDetailType.ISSUES)
+            )
         )
+        return details
     }
 
     private fun Repository.toGithubDetails(): GithubRepoDetails {
         Log.d("toGithubDetails", "app=$this")
-        return GithubRepoDetails(name, avatarUrl, this.toAppDetailItem())
+        return GithubRepoDetails(name, ownerName, avatarUrl, url, this.toRepositoryDetailItem())
     }
 }
 
-data class RepositoryDetailItem(val detailedInfo: String, val type: AppDetailType)
+data class RepositoryDetailItem(val detailedInfo: String, val type: RepositoryDetailType)
 
-enum class AppDetailType {
+enum class RepositoryDetailType {
     NAME,
     SIZE,
     DOWNLOAD,
     LAST_UPDATED,
     RATING,
+    DESCRIPTION,
+    ISSUES,
 }

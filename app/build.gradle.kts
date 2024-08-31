@@ -75,7 +75,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.room.android)
     implementation(libs.room.android.ktx)
+    implementation(libs.androidx.runtime)
+    implementation(libs.hilt.work)
+    implementation(libs.hilt.common)
     ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
     ksp(libs.room.compiler.android)
     kspTest(libs.hilt.compiler)
     // Hilt testing dependencies

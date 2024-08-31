@@ -16,4 +16,5 @@ data class RepositoryEntity(
     val url: String? = null,
     val forks: Long? = null,
     val stars: Long? = null,
+    val openIssuesCount: Long? = null,
 )

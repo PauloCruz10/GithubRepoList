@@ -1,4 +1,4 @@
-package com.example.reposlist.presentation.ui.common
+package com.example.reposlist.ui.ui.common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -13,6 +13,8 @@ coilCompose = "2.6.0"
 compose-bom = "2024.06.00"
 core-ktx = "1.13.1"
 hiltAndroid = "2.48"
+hiltWork = "1.0.0"
+androidxRuntime = "2.8.1"
 hiltNavigationCompose = "1.2.0"
 kotlin = "2.0.0"
 lifecycleViewmodelCompose = "2.8.4"
@@ -54,6 +56,10 @@ androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-ru
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltWork" }
+hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltWork" }
+hilt-common = { module = "androidx.hilt:hilt-common", version.ref = "hiltWork" }
+androidx-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidxRuntime" }
 room-android = { module = "androidx.room:room-runtime", version.ref = "room"}
 room-compiler-android = { module = "androidx.room:room-compiler", version.ref = "room"}
 room-android-ktx = { module = "androidx.room:room-ktx", version.ref = "room"}

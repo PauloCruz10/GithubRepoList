@@ -2,10 +2,12 @@
     <string name="app_name">ReposList</string>
     <string name="app_title">Olhó Repo</string>
     <string name="detail_name">Name</string>
+    <string name="detail_description">Description</string>
     <string name="detail_size">Size</string>
-    <string name="detail_downloads">Downloads</string>
+    <string name="detail_forks">Forks</string>
     <string name="detail_last_updated">Last updated</string>
-    <string name="detail_rating">Rating</string>
+    <string name="detail_rating">Stars</string>
+    <string name="detail_open_issues">Open issues</string>
     <string name="reload">Reload</string>
     <string name="download_not_available">Download is not available in demo mode</string>
     <string name="feature_not_available">Not implemented yet</string>

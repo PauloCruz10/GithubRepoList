@@ -1,4 +1,4 @@
-package com.example.reposlist.plarform
+package com.example.reposlist.ui.plarform
 
 import android.util.Log
 import com.example.shareddata.logger.Logger

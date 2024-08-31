@@ -1,9 +1,10 @@
-package com.example.reposlist.presentation.ui.detailscreen.components
+package com.example.reposlist.ui.ui.detailscreen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,7 +21,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.reposlist.R
-import com.example.reposlist.ui.theme.AppListTheme
+import com.example.reposlist.ui.theme.RepoListTheme
+import com.example.reposlist.ui.theme.backButtonSize
 import com.example.reposlist.ui.theme.lightGreen
 import com.example.reposlist.ui.theme.oliveGreen
 
@@ -39,8 +41,7 @@ fun DetailTopBar(
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-
+                modifier = Modifier.fillMaxWidth().padding(end = 50.dp),
             ) {
                 Text(text = title)
             }
@@ -56,7 +57,7 @@ fun DetailTopBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_back),
                     contentDescription = "Back",
-                    modifier = Modifier.size(50.dp)
+                    modifier = Modifier.size(backButtonSize)
                 )
             }
         }
@@ -66,7 +67,7 @@ fun DetailTopBar(
 @Preview(showBackground = true)
 @Composable
 fun TopBarPreview() {
-    AppListTheme {
+    RepoListTheme {
         DetailTopBar(title = "WallApps") {}
     }
 }

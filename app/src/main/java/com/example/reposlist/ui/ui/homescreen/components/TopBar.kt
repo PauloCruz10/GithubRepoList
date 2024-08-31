@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.reposlist.R
-import com.example.reposlist.ui.theme.AppListTheme
+import com.example.reposlist.ui.theme.RepoListTheme
 import com.example.reposlist.ui.theme.lightGreen
 import com.example.reposlist.ui.theme.marginxSmall
 import com.example.reposlist.ui.theme.oliveGreen
@@ -87,7 +87,7 @@ fun TopBar(
 @Preview(showBackground = true)
 @Composable
 fun TopBarPreview() {
-    AppListTheme {
+    RepoListTheme {
         TopBar(title = "WallApps", onIconAction = {})
     }
 }

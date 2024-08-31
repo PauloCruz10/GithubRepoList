@@ -34,7 +34,7 @@ fun Error(modifier: Modifier = Modifier, onRetryClick: () -> Unit) {
         Image(
             modifier = Modifier.size(100.dp),
             painter = painterResource(id = R.drawable.ic_error),
-            contentDescription = "My GIF",
+            contentDescription = "Error",
             contentScale = ContentScale.Fit
         )
 

@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.reposlist.R
 import com.example.reposlist.ui.model.GithubRepoItem
 import com.example.reposlist.ui.ui.common.Error
-import com.example.reposlist.presentation.ui.common.Loading
+import com.example.reposlist.ui.ui.common.Loading
 import com.example.shareddata.common.Resource
 import com.example.shareddata.common.isLoading
 import com.example.shareddata.model.repositories.Repository
@@ -40,11 +40,13 @@ private fun Success(modifier: Modifier, allApps: List<Repository>, onAppClick: (
             ItemCard(
                 item = GithubRepoItem(
                     id = item.id,
-                    name = item.fullName,
+                    name = item.name,
                     description = item.description,
                     image = item.avatarUrl,
                     icon = R.drawable.ic_star,
                     stars = item.stars.toString(),
+                    owner = item.ownerName,
+                    language = item.language,
                 ),
                 onAppClick = onAppClick,
             )

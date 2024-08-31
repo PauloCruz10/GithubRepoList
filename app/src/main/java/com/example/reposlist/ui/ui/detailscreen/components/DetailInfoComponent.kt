@@ -1,4 +1,4 @@
-package com.example.reposlist.presentation.ui.detailscreen.components
+package com.example.reposlist.ui.ui.detailscreen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.reposlist.R
@@ -47,11 +48,13 @@ fun DetailInfoComponent(label: Int, value: String, icon: Int) {
                 text = stringResource(label),
                 modifier = Modifier.padding(top = marginxxSmall, start = marginxSmall),
                 style = Typography.bodyLarge,
+                fontWeight = FontWeight.Bold
+
             )
         }
         Text(
             text = value,
-            modifier = Modifier.padding(start = marginxxSmall, end = marginNormal, top = marginxxSmall),
+            modifier = Modifier.padding(start = marginxSmall, end = marginNormal, top = marginxxSmall),
             style = Typography.bodyMedium
         )
     }

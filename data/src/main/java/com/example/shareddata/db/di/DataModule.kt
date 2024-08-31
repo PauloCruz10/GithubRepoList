@@ -34,6 +34,7 @@ object DataModule {
     }
 
     @Provides
+    @Singleton
     fun provideAppsRepository(apiService: RepositoriesListApi, repoInfoDao: RepositoryDao): GithubsRepository {
         return GithubsRepositoryImplement(apiService, repoInfoDao)
     }

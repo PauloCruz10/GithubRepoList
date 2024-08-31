@@ -2,6 +2,7 @@ package com.example.network
 
 import com.example.network.api.RepositoriesListApi
 import com.example.network.interceptor.HeaderInterceptor
+import com.example.network.model.repositories.values.GITHUB_REPO_BASE_URL
 import dagger.Provides
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -24,7 +25,7 @@ object NetworkModule {
             .addInterceptor(HeaderInterceptor())
             .build()
         return Retrofit.Builder()
-            .baseUrl("https://api.github.com/search/")
+            .baseUrl(GITHUB_REPO_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

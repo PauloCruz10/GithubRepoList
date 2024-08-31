@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "repositories")
 data class RepositoryEntity(
-    @PrimaryKey val id: Long = 0, // Set default value to 0
+    @PrimaryKey val id: Long = 0,
+    val externalId: Long? = 0L,
     val name: String? = null,
     val fullName: String? = null,
     val ownerName: String? = null,

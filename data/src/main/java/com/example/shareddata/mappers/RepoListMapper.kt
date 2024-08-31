@@ -7,18 +7,18 @@ import com.example.shareddata.model.repositories.Repository
 fun ItemsDto.mapToEntity(): RepositoryEntity? {
     val repoId = id ?: return null
     return RepositoryEntity(
-        repoId,
-        name,
-        fullName,
-        owner?.login,
-        private,
-        owner?.avatarUrl,
-        language,
-        description,
-        htmlUrl,
-        forksCount,
-        stargazersCount,
-        openIssuesCount,
+        id = repoId,
+        name = name,
+        fullName = fullName,
+        ownerName = owner?.login,
+        private = private,
+        avatarUrl = owner?.avatarUrl,
+        language = language,
+        description = description,
+        url = htmlUrl,
+        forks = forksCount,
+        stars = stargazersCount,
+        openIssuesCount = openIssuesCount,
     )
 }
 

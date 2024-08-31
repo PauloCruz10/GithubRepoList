@@ -28,6 +28,9 @@ ktx-coroutines-test = "1.6.4"
 androidx-arch-core-test = "2.1.0"
 androidx-test-core = "1.4.0"
 
+paging-compose = "3.2.0"
+paging = "3.2.0"
+
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
@@ -63,6 +66,7 @@ androidx-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "a
 room-android = { module = "androidx.room:room-runtime", version.ref = "room"}
 room-compiler-android = { module = "androidx.room:room-compiler", version.ref = "room"}
 room-android-ktx = { module = "androidx.room:room-ktx", version.ref = "room"}
+room-android-paging = { module = "androidx.room:room-paging", version.ref = "room"}
 
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 
@@ -70,6 +74,9 @@ mockito-core = {group = "org.mockito",  name="mockito-core", version.ref = "moki
 ktx-coroutines-test = {group = "org.jetbrains.kotlinx",  name="kotlinx-coroutines-test", version.ref = "ktx-coroutines-test" }
 androidx-arch-core-test = {group = "androidx.arch.core",  name="core-testing", version.ref = "androidx-arch-core-test" }
 androidx-test-core-test = {group = "androidx.test", name="core", version.ref = "androidx-test-core" }
+
+androidx-paging-compose = {module = "androidx.paging:paging-compose", version.ref = "paging-compose"}
+androidx-paging-runtime = {module = "androidx.paging:paging-runtime", version.ref = "paging"}
 
 
 [plugins]

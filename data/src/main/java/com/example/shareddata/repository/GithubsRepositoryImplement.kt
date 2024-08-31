@@ -1,75 +1,64 @@
 package com.example.shareddata.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.example.network.api.RepositoriesListApi
 import com.example.shareddata.common.Resource
+import com.example.shareddata.db.dao.RemoteKeyDao
 import com.example.shareddata.db.dao.RepositoryDao
 import com.example.shareddata.logger.Logger
 import com.example.shareddata.mappers.mapToEntity
 import com.example.shareddata.mappers.mapToLib
 import com.example.shareddata.model.repositories.Repository
-import kotlinx.coroutines.CoroutineDispatcher
+import com.example.shareddata.paging.RepositoriesRemoteMediator
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.random.Random
 
 /**
  * Implementation of [AppsRepository]
  */
-class GithubsRepositoryImplement @Inject constructor(private val repositoryListApi: RepositoriesListApi, private val repositoryDao: RepositoryDao) : GithubsRepository {
+class GithubsRepositoryImplement @Inject constructor(
+    private val repositoryListApi: RepositoriesListApi,
+    private val repositoryDao: RepositoryDao,
+    private val remoteKeyDao: RemoteKeyDao,
+) : GithubsRepository {
     /**
      * Loads the repos from the network, and save into the database.
      * The consumers will be notified when collecting to the flow provided by room engine
      */
     override suspend fun loadRepositories(): Resource<Unit> {
-        return withDelay {
-            try {
-                val response = repositoryListApi.getAll()
-                Logger.d("loadRepositories", "response=$response")
-                val body = if (!response.isSuccessful) return@withDelay Resource.Failure() else response.body()
-                if (body != null) {
-                    val repos = body.items.mapToEntity()
-                    if (repos.isNotEmpty()) {
-                        repos.forEach { repo ->
-                            Logger.d("loadRepositories", "repo=$repo")
-                            repositoryDao.insertRepo(repo)
-                        }
-                        Resource.Success(Unit)
-                    } else {
-                        Logger.d("loadRepositories", "empty body")
-                        Resource.Failure()
+        return try {
+            val response = repositoryListApi.getAll(page = 1, perPage = 50)
+            Logger.d("loadRepositories", "response=$response")
+            val body = if (!response.isSuccessful) return Resource.Failure() else response.body()
+            if (body != null) {
+                val repos = body.items.mapToEntity()
+                if (repos.isNotEmpty()) {
+                    repos.forEach { repo ->
+                        Logger.d("loadRepositories", "repo=$repo")
+                        repositoryDao.insertRepo(repo)
                     }
+                    Resource.Success(Unit)
                 } else {
+                    Logger.d("loadRepositories", "empty body")
                     Resource.Failure()
                 }
-            } catch (e: Exception) {
-                println("dude e=$e")
-                Logger.e("loadRepositories", "unable to load the apps", "$e")
+            } else {
                 Resource.Failure()
             }
+        } catch (e: Exception) {
+            println("dude e=$e")
+            Logger.e("loadRepositories", "unable to load the apps", "$e")
+            Resource.Failure()
         }
-    }
-
-    /**
-     * Gets all apps from the database with flow. Listeners will be notified on any changes
-     */
-    override suspend fun getRepositories(): Flow<Resource<List<Repository>>> {
-        return flow {
-            emit(Resource.Loading())
-
-            emitAll(
-                repositoryDao.getAllReposFlow().map { apps ->
-                    Logger.d("getApps", "apps=$apps")
-                    Resource.Success(apps.mapToLib())
-                }
-            )
-        }.flowOn(Dispatchers.IO)
     }
 
     /**
@@ -87,15 +76,22 @@ class GithubsRepositoryImplement @Inject constructor(private val repositoryListA
             )
         }.flowOn(Dispatchers.IO)
     }
-}
 
-private suspend fun <T> withDelay(
-    delayInMilSec: Long = Random.nextLong(300, 1500),
-    coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    task: suspend () -> T,
-): T {
-    return withContext(context = coroutineDispatcher) {
-        delay(delayInMilSec)
-        task()
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getPagedRepositories(): Flow<PagingData<Repository>> {
+        Logger.d("GithubsRepositoryImplement", "getPagedRepositories")
+        return Pager(
+            config = PagingConfig(
+                pageSize = 100,
+                prefetchDistance = 50,
+                enablePlaceholders = false,
+            ),
+            remoteMediator = RepositoriesRemoteMediator(repositoryListApi, repositoryDao, remoteKeyDao),
+            pagingSourceFactory = { repositoryDao.getAllReposFlow() }
+        ).flow.map { pagingData ->
+            pagingData.map { repoEntity ->
+                repoEntity.mapToLib()
+            }
+        }
     }
 }

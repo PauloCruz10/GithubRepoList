@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.reposlist.R
 import com.example.reposlist.ui.ui.homescreen.components.AllItemsZone
 import com.example.reposlist.ui.ui.homescreen.components.HeaderZone
@@ -22,7 +22,7 @@ import com.example.reposlist.ui.theme.marginNormal
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel(), onAppSelected: (id: Long, name: String) -> Unit) {
     val context = LocalContext.current
-    val appsList = homeViewModel.listAppApps.collectAsStateWithLifecycle()
+    val reposList = homeViewModel.pagedRepositories.collectAsLazyPagingItems()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -43,7 +43,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel(), onAppSelected: (i
         ) {
             HeaderZone(Modifier.weight(0.1f), stringResource(id = R.string.all_aps), R.drawable.ic_more)
 
-            AllItemsZone(Modifier.weight(0.9f), appsList.value, onAppSelected) {
+            AllItemsZone(Modifier.weight(0.9f), reposList, onAppSelected) {
                 homeViewModel.loadApps()
             }
         }

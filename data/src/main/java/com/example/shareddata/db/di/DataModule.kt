@@ -3,6 +3,7 @@ package com.example.shareddata.db.di
 import android.content.Context
 import androidx.room.Room
 import com.example.network.api.RepositoriesListApi
+import com.example.shareddata.db.dao.RemoteKeyDao
 import com.example.shareddata.db.dao.RepositoryDao
 import com.example.shareddata.db.database.AppDatabase
 import com.example.shareddata.repository.GithubsRepository
@@ -35,7 +36,13 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideAppsRepository(apiService: RepositoriesListApi, repoInfoDao: RepositoryDao): GithubsRepository {
-        return GithubsRepositoryImplement(apiService, repoInfoDao)
+    fun provideRemoteKeyDao(db: AppDatabase): RemoteKeyDao {
+        return db.remoteKeyDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppsRepository(apiService: RepositoriesListApi, repoInfoDao: RepositoryDao, remoteKeyDao: RemoteKeyDao): GithubsRepository {
+        return GithubsRepositoryImplement(apiService, repoInfoDao, remoteKeyDao)
     }
 }

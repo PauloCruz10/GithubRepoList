@@ -28,9 +28,11 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.room.android)
     implementation(libs.room.android.ktx)
+    implementation(libs.room.android.paging)
     implementation(libs.hilt.android)
     implementation(project(":network"))
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.paging.runtime)
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler.android)
 

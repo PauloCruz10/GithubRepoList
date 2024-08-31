@@ -1,5 +1,6 @@
 package com.example.shareddata.db.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -12,9 +13,15 @@ interface RepositoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRepo(appEntity: RepositoryEntity)
 
-    @Query("SELECT * FROM repositories")
-    fun getAllReposFlow(): Flow<List<RepositoryEntity>>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(appEntities: List<RepositoryEntity>)
+
+    @Query("SELECT * FROM repositories order by stars DESC")
+    fun getAllReposFlow(): PagingSource<Int, RepositoryEntity>
 
     @Query("SELECT * FROM repositories WHERE id = :repoId")
     fun getRepoByIdFlow(repoId: String): Flow<RepositoryEntity?>
+
+    @Query("DELETE FROM repositories")
+    suspend fun clearAll()
 }

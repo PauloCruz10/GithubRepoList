@@ -1,4 +1,4 @@
-package com.example.reposlist.testLogger
+package com.example.repolist.test
 
 import com.example.shareddata.logger.Logger
 

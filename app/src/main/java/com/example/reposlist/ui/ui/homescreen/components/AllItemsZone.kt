@@ -22,7 +22,9 @@ fun AllItemsZone(
 ) {
     when(allApps.loadState.refresh) {
         is LoadState.Loading -> Loading(modifier)
-        is LoadState.Error -> Error(modifier, onRetryClick)
+        is LoadState.Error -> {
+            if (allApps.itemCount == 0) Error(modifier, onRetryClick) else Success(modifier, allApps, onAppClick)
+        }
         else -> Success(modifier, allApps, onAppClick)
     }
 }

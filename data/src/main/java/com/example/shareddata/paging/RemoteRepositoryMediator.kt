@@ -13,6 +13,10 @@ import com.example.shareddata.db.dao.RemoteKeyDao
 import com.example.shareddata.db.entity.RemoteKey
 import com.example.shareddata.mappers.mapToEntity
 
+/**
+ * Mediates the remote repositories, by handling the pagination mechanism. Our database is the source of true, so
+ * we need to insert on the database to be triggered on the UI
+ */
 @OptIn(ExperimentalPagingApi::class)
 class RepositoriesRemoteMediator(
     private val api: RepositoriesListApi,
@@ -45,20 +49,13 @@ class RepositoriesRemoteMediator(
             )
 
             if (!response.isSuccessful) {
-                throw Exception("API error: ${response.code()}")
+                return MediatorResult.Success(endOfPaginationReached = true)
             }
 
             val responseData = response.body()?.items ?: emptyList()
             val endOfPaginationReached = responseData.isEmpty()
 
-            if (loadType == LoadType.REFRESH) {
-                dao.clearAll()
-            }
-            val nextPage = if (responseData.isEmpty()) {
-                null
-            } else {
-                page + 1
-            }
+            val nextPage = if (responseData.isEmpty()) null else page + 1
 
             remoteKeyDao.insertKey(
                 RemoteKey(

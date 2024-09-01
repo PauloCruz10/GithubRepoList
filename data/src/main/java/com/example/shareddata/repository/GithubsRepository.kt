@@ -12,13 +12,7 @@ interface GithubsRepository {
     /**
      * Loads all the apps
      */
-    suspend fun loadRepositories(): Resource<Unit>
-
-
-    /*/**
-     * Get all the apps hold in an [Flow]
-     */
-    suspend fun getRepositories(): Flow<Resource<List<Repository>>>*/
+    suspend fun loadRepositories()
 
     /**
      * Get app by [id] on [Flow]

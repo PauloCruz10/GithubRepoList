@@ -42,7 +42,7 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideAppsRepository(apiService: RepositoriesListApi, repoInfoDao: RepositoryDao, remoteKeyDao: RemoteKeyDao): GithubsRepository {
+    fun provideGithubsRepository(apiService: RepositoriesListApi, repoInfoDao: RepositoryDao, remoteKeyDao: RemoteKeyDao): GithubsRepository {
         return GithubsRepositoryImplement(apiService, repoInfoDao, remoteKeyDao)
     }
 }

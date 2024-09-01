@@ -41,7 +41,9 @@ dependencies {
 
     // Testing dependencies
     testImplementation(libs.junit)
-    testImplementation(libs.ktx.coroutines.test) // Replace with your Coroutines version
+    testImplementation(libs.ktx.coroutines.test)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk)
 
     // Required by the Hilt Testing library
     androidTestImplementation(libs.androidx.arch.core.test)

@@ -28,11 +28,11 @@
             </intent-filter>
         </activity>
         <!-- check: https://developer.android.com/develop/background-work/background-tasks/persistent/configuration/custom-configuration -->
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove">
-        </provider>
+            tools:node="remove"/>
     </application>
 
 </manifest>

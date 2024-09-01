@@ -8,9 +8,11 @@ import androidx.paging.cachedIn
 import com.example.shareddata.model.repositories.Repository
 import com.example.shareddata.repository.GithubsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,14 +24,14 @@ class HomeViewModel @Inject constructor(private val githubRepos: GithubsReposito
 
     init {
         Log.d("HomeViewModel", "init")
-        /*viewModelScope.launch(Dispatchers.Default) {
-            githubRepos.loadRepositories()
-        }*/
     }
 
-    fun loadApps() {
-        /*viewModelScope.launch(Dispatchers.Default) {
+    /**
+     * Refresh all apps, this should only be used on error scenarios or to refresh the repositories
+     */
+    fun loadRepositories() {
+        viewModelScope.launch(Dispatchers.Default) {
             githubRepos.loadRepositories()
-        }*/
+        }
     }
 }

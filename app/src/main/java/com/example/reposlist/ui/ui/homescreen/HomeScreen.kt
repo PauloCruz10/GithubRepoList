@@ -44,7 +44,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel(), onAppSelected: (i
             HeaderZone(Modifier.weight(0.1f), stringResource(id = R.string.all_aps), R.drawable.ic_more)
 
             AllItemsZone(Modifier.weight(0.9f), reposList, onAppSelected) {
-                homeViewModel.loadApps()
+                homeViewModel.loadRepositories()
             }
         }
     }

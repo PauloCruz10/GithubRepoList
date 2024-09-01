@@ -38,7 +38,7 @@ class GithubsRepositoryImplement @Inject constructor(
      * Loads the repos from the network, and save into the database.
      * This should only be used to refresh the current content on the database
      */
-    override suspend fun loadRepositories() {
+    override suspend fun loadRepositories(language: String, sort: String, order: String) {
         withContext(Dispatchers.IO) {
             val currentSavedPage = remoteKeyDao.getKeyByRepo(REPO_REMOTE_KEY)?.next_page ?: run {
                 Logger.d("loadRepositories", "")
@@ -50,7 +50,13 @@ class GithubsRepositoryImplement @Inject constructor(
             for (i in 1..pages) {
                 println("aqui")
                 try {
-                    val response = repositoryListApi.getAll(page = i, perPage = 100)
+                    val response = repositoryListApi.getAll(
+                        query = language,
+                        sort = sort,
+                        order = order,
+                        page = i,
+                        perPage = PAGE_SIZE
+                    )
                     Logger.d("GithubsRepositoryImplement", "loadRepositories", "response=$response")
                     val body = if (response.isSuccessful) response.body() else {
                         Logger.d("GithubsRepositoryImplement", "loadRepositories", "unable to get the repositories for page=$i")
@@ -98,7 +104,7 @@ class GithubsRepositoryImplement @Inject constructor(
      * Database is the single source of true, with pagination provides the capability of reacting to changes and publish on the flow to be observed by the UI
      */
     @OptIn(ExperimentalPagingApi::class)
-    override fun getPagedRepositories(): Flow<PagingData<Repository>> {
+    override fun getPagedRepositories(language: String, sort: String, order: String): Flow<PagingData<Repository>> {
         Logger.d("GithubsRepositoryImplement", "getPagedRepositories")
         return Pager(
             config = PagingConfig(
@@ -106,7 +112,14 @@ class GithubsRepositoryImplement @Inject constructor(
                 prefetchDistance = PRE_FETCH_DISTANCE,
                 enablePlaceholders = false,
             ),
-            remoteMediator = RepositoriesRemoteMediator(repositoryListApi, repositoryDao, remoteKeyDao),
+            remoteMediator = RepositoriesRemoteMediator(
+                repositoryListApi,
+                repositoryDao,
+                remoteKeyDao,
+                language,
+                sort,
+                order
+            ),
             pagingSourceFactory = { repositoryDao.getAllReposFlow() }
         ).flow.map { pagingData ->
             pagingData.map { repoEntity ->

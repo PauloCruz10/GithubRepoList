@@ -1,10 +1,10 @@
 package com.example.shareddata.mappers
 
-import com.example.network.model.repositories.ItemsDto
+import com.example.network.model.repositories.RepositoryDto
 import com.example.shareddata.db.entity.RepositoryEntity
 import com.example.shareddata.model.repositories.Repository
 
-fun ItemsDto.mapToEntity(): RepositoryEntity? {
+fun RepositoryDto.mapToEntity(): RepositoryEntity? {
     val repoId = id ?: return null
     return RepositoryEntity(
         id = repoId,
@@ -22,7 +22,7 @@ fun ItemsDto.mapToEntity(): RepositoryEntity? {
     )
 }
 
-fun List<ItemsDto>.mapToEntity() = this.mapNotNull { it.mapToEntity() }
+fun List<RepositoryDto>.mapToEntity() = this.mapNotNull { it.mapToEntity() }
 
 fun RepositoryEntity.mapToLib(): Repository {
     return Repository(

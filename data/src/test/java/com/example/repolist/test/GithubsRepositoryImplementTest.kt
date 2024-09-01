@@ -1,7 +1,7 @@
 package com.example.repolist.test
 
 import com.example.network.api.RepositoriesListApi
-import com.example.network.model.repositories.ItemsDto
+import com.example.network.model.repositories.RepositoryDto
 import com.example.network.model.repositories.RepositoryInfoDto
 import com.example.shareddata.db.dao.RemoteKeyDao
 import com.example.shareddata.db.dao.RepositoryDao
@@ -60,7 +60,11 @@ class GithubsRepositoryImplementTest {
         coEvery { (repoInfoDao.insertRepo(entity)) } answers { Unit }
         coEvery { (remoteKeyDao.getKeyByRepo("repo_remote_key")) } answers { RemoteKey("1", 1, 0L) }
 
-        appsRepository.loadRepositories()
+        appsRepository.loadRepositories(
+            language = "language:kotlin",
+            sort = "stars",
+            order = "desc",
+        )
 
         coVerify(exactly = 1) { repoInfoDao.insertRepo(any()) }
 
@@ -68,7 +72,7 @@ class GithubsRepositoryImplementTest {
 
     private val mockResponse = RepositoryInfoDto(
         1, false, arrayListOf(
-            ItemsDto(1L)
+            RepositoryDto(1L)
         )
     )
 }

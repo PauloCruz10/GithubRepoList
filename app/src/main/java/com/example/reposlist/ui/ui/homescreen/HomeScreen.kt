@@ -41,7 +41,9 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel(), onAppSelected: (i
                 .fillMaxSize()
                 .padding(start = marginNormal)
         ) {
-            HeaderZone(Modifier.weight(0.1f), stringResource(id = R.string.all_aps), R.drawable.ic_more)
+            HeaderZone(Modifier.weight(0.1f), stringResource(id = R.string.all_repos_title), R.drawable.ic_more) {
+                Toast.makeText(context, R.string.feature_not_available, Toast.LENGTH_SHORT).show()
+            }
 
             AllItemsZone(Modifier.weight(0.9f), reposList, onAppSelected) {
                 homeViewModel.loadRepositories()

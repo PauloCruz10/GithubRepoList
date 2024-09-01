@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.reposlist.ui.common.getRepoListConfig
 import com.example.shareddata.model.repositories.Repository
 import com.example.shareddata.repository.GithubsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +18,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val githubRepos: GithubsRepository) : ViewModel() {
-
-    val pagedRepositories: Flow<PagingData<Repository>> = githubRepos.getPagedRepositories()
+    private val reposConfig = getRepoListConfig()
+    val pagedRepositories: Flow<PagingData<Repository>> = githubRepos.getPagedRepositories(
+        reposConfig.language,
+        reposConfig.sort,
+        reposConfig.order,
+    )
         .cachedIn(viewModelScope)
         .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
 
@@ -31,7 +36,12 @@ class HomeViewModel @Inject constructor(private val githubRepos: GithubsReposito
      */
     fun loadRepositories() {
         viewModelScope.launch(Dispatchers.Default) {
-            githubRepos.loadRepositories()
+            val configs =
+                githubRepos.loadRepositories(
+                    reposConfig.language,
+                    reposConfig.sort,
+                    reposConfig.order,
+                )
         }
     }
 }

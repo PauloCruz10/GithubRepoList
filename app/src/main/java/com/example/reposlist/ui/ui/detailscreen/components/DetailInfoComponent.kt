@@ -46,7 +46,11 @@ fun DetailInfoComponent(label: Int, value: String, icon: Int) {
             }
             Text(
                 text = stringResource(label),
-                modifier = Modifier.padding(top = marginxxSmall, start = marginxSmall),
+                modifier = Modifier.padding(
+                    top = marginxxSmall,
+                    start = marginNormal,
+                    end = marginNormal
+                ),
                 style = Typography.bodyLarge,
                 fontWeight = FontWeight.Bold
 

@@ -12,12 +12,12 @@ interface GithubsRepository {
     /**
      * Loads all the apps
      */
-    suspend fun loadRepositories()
+    suspend fun loadRepositories(language: String, sort: String, order: String)
 
     /**
      * Get app by [id] on [Flow]
      */
     suspend fun getRepositoryById(id: Long): Flow<Resource<Repository>>
 
-    fun getPagedRepositories(): Flow<PagingData<Repository>>
+    fun getPagedRepositories(language: String, sort: String, order: String): Flow<PagingData<Repository>>
 }

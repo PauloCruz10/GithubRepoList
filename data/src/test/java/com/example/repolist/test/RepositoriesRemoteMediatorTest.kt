@@ -6,7 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.example.network.api.RepositoriesListApi
-import com.example.network.model.repositories.ItemsDto
+import com.example.network.model.repositories.RepositoryDto
 import com.example.network.model.repositories.RepositoryInfoDto
 import com.example.shareddata.common.REPO_REMOTE_KEY
 import com.example.shareddata.db.dao.RemoteKeyDao
@@ -33,7 +33,14 @@ class RepositoriesRemoteMediatorTest {
         api = mockk()
         dao = mockk(relaxed = true)
         remoteKeyDao = mockk()
-        mediator = RepositoriesRemoteMediator(api, dao, remoteKeyDao)
+        mediator = RepositoriesRemoteMediator(
+            api,
+            dao,
+            remoteKeyDao,
+            "language:kotlin",
+            "stars",
+            "desc"
+        )
     }
 
     @OptIn(ExperimentalPagingApi::class)
@@ -130,7 +137,7 @@ class RepositoriesRemoteMediatorTest {
 
     private val mockResponse = RepositoryInfoDto(
         1, false, arrayListOf(
-            ItemsDto(1L)
+            RepositoryDto(1L)
         )
     )
 

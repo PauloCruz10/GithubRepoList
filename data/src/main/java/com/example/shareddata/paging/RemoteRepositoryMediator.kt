@@ -22,6 +22,9 @@ class RepositoriesRemoteMediator(
     private val api: RepositoriesListApi,
     private val dao: RepositoryDao,
     private val remoteKeyDao: RemoteKeyDao,
+    private val language: String,
+    private val sort: String,
+    private val order: String
 ) : RemoteMediator<Int, RepositoryEntity>() {
 
     override suspend fun load(
@@ -44,6 +47,9 @@ class RepositoriesRemoteMediator(
             }
 
             val response = api.getAll(
+                language,
+                sort,
+                order,
                 perPage = state.config.pageSize,
                 page = page
             )

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReposList</string>
+    <string name="app_name">Olhó Repo</string>
     <string name="app_title">Olhó Repo</string>
     <string name="detail_name">Name</string>
     <string name="detail_description">Description</string>
@@ -12,5 +12,5 @@
     <string name="download_not_available">Download is not available in demo mode</string>
     <string name="feature_not_available">Not implemented yet</string>
     <string name="apps_highlighted">Highlighted</string>
-    <string name="all_aps">All repos</string>
+    <string name="all_repos_title">Kotlin Repositories</string>
 </resources>

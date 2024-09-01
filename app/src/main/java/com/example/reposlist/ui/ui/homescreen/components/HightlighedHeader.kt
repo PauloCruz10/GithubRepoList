@@ -1,5 +1,6 @@
 package com.example.reposlist.ui.ui.homescreen.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -15,7 +16,7 @@ import com.example.reposlist.R
 import com.example.reposlist.ui.theme.marginNormal
 
 @Composable
-fun HeaderZone(modifier: Modifier, text: String, icon: Int) {
+fun HeaderZone(modifier: Modifier, text: String, icon: Int, clickAction: () -> Unit) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -28,7 +29,9 @@ fun HeaderZone(modifier: Modifier, text: String, icon: Int) {
         )
         Spacer(modifier = Modifier.width(marginNormal))
         Icon(
-            modifier = Modifier.padding(end = marginNormal),
+            modifier = Modifier
+                .padding(end = marginNormal)
+                .clickable { clickAction() },
             painter = painterResource(id = icon),
             contentDescription = null
         )
@@ -38,5 +41,7 @@ fun HeaderZone(modifier: Modifier, text: String, icon: Int) {
 @Preview(showBackground = true)
 @Composable
 fun previewHeaderZone() {
-    HeaderZone(Modifier, text = "This is an header test", icon = R.drawable.ic_account)
+    HeaderZone(Modifier, text = "This is an header test", icon = R.drawable.ic_account) {
+
+    }
 }
